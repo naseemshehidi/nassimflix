@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import MovieCard from "./MovieCard";
 import AddMovie from "./AddMovie";
 import moviesData from "../data";
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import MovieDetails from './MovieDetails';
+
 
 const MovieList = () => {
   const [movies, setMovies] = useState(moviesData);
@@ -55,10 +58,15 @@ const MovieList = () => {
       </div>
       <div className="row">
         {filteredMovies.map((movie, index) => (
-          <div key={index} className="col-lg-4 mb-4">
-            <MovieCard movie={movie} />
+          <div key={movie.id} className="col-lg-4 mb-4">
+            <Link to={`/movies/${movie.id}`}>
+              <MovieCard movie={movie} />
+            </Link>
           </div>
         ))}
+        <Routes>
+          <Route path="/movies/:id" element={<MovieDetails movies={movies}/>} />
+        </Routes>
       </div>
     </div>
   );
